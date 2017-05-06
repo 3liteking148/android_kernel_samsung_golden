@@ -672,6 +672,13 @@ static int __init parse_tag_cmdline(const struct tag *tag)
 	strlcpy(default_command_line, tag->u.cmdline.cmdline,
 		COMMAND_LINE_SIZE);
 #endif
+
+	// fix offline charging
+	if (strstr(default_command_line, "lpm_boot=1") != 0) {
+            strlcat(default_command_line, " ", COMMAND_LINE_SIZE);
+	    strlcat(default_command_line, "androidboot.mode=charger", COMMAND_LINE_SIZE);
+	}
+
 	return 0;
 }
 
